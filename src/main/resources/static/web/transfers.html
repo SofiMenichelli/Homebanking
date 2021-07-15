@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/transfers.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous">
+        </script>
+    
+    <script>
+        $(document).ready(function () {
+            $('#menu_on').click(function () { // Al hacer click...
+                $('body').toggleClass('visible_menu'); // Añadimos o eliminamos la clase 'visible_menu' al body
+            })
+        });
+    </script>
+
+</head>
+<body>
+    <div id="app">
+        <nav class="">
+            <div class="imgCont">
+                <img src="../assets/logo.png" alt="Logo">
+            </div>
+            <div class="navCont">
+                <a href="accounts.html">Cuentas</a>
+                <a href="loan-application.html">Prestamos</a>
+                <a href="transfers.html">Transferencias</a>
+                <a href="cards.html">Tarjetas</a>
+                <a href="index.html" class="btn">Cerrar Sesión</a>
+            </div>
+        </nav>
+        <a href="#" id="menu_on">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <main>
+            <form>
+                <h1>Realizar transferencia</h1>
+                <select v-model="selected">
+                    <option selected value="" disabled>¿A que cuenta desea transferir?</option>
+                    <option>Cuenta Propia</option>
+                    <option>Cuenta de Terceros</option>
+                </select>
+                <select v-model="accOrigin">
+                    <option selected value="" disabled>Elija la cuenta origen</option>                   
+                    <option v-for="acc in database" :value="acc.number">{{acc.number}}</option>
+                </select>
+                <select v-show="selected == 'Cuenta Propia'" v-model="accDestino">
+                    <option selected value="" disabled>Elija la cuenta Destino</option>
+                    <option v-show="accOrigin !== acc.number" v-for="acc in database" :value="acc.number">{{acc.number}}</option>
+                </select>
+                <label v-show="selected == 'Cuenta de Terceros'" for="">Cuenta Destino
+                    <input type="text" v-model="accDestino">
+                </label>
+                <label>Monto
+                    <input type="text" v-model="accMonto">
+                </label>
+                <label>Descripcion
+                    <input type="text" v-model="accDesc">           
+                 </label>
+                 <input type="button" @click="transfer" value="Transferir">
+            </form>
+            <div class="montos">
+                <p  v-for="acc in database" v-show="accOrigin == acc.number">Saldo actual de la cuenta: ${{acc.balance}}</p>
+            </div>
+          <!--   <p>Saldo luego de la transaccion {{acc.balance - accMonto}}</p> -->
+        </main>
+        <footer>
+            <p>&copy;By Sofia Menichelli | 2021 | MindHub
+                <a href="https://github.com/SofiMenichelli" target="_blank">
+                    <img src="../assets/logoGit.png" alt="GitHub" />
+                </a>
+            </p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- swal -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+    <script src="../js/transfers.js"></script>
+</body>
+</html>

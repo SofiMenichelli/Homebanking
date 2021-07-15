@@ -5,148 +5,113 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounts</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/c4b071bb59.js" crossorigin="anonymous"></script>
-        <link type="text/css" href="https://onlinebanking.bancogalicia.com.ar/Content/bootstrap.min.css?v=637590296560173443"
-            rel="stylesheet" />
-        <link type="text/css" href="https://onlinebanking.bancogalicia.com.ar/Content/default.min.css?v=637590296560183293"
-            rel="stylesheet" />
+    <link rel="stylesheet" href="../css/accounts.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous">
+        </script>
+    
+    <script>
+        $(document).ready(function () {
+            $('#menu_on').click(function () { // Al hacer click...
+                $('body').toggleClass('visible_menu'); // Añadimos o eliminamos la clase 'visible_menu' al body
+            })
+        });
+    </script>
+    
 </head>
 <body>
     <div id="app">
-        <div class="container-fluid ">
-            <div style="display:none" id="global-loading" class="loader"></div>
-            <!--menu-->
-        
-            <div class="navbar navbar-default hidden-lg">
-                <button type="button" aria-label="abrir menu" class="navbar-toggle" data-toggle="offcanvas"
-                    data-target=".navmenu">
-                    <span class="icon icon-hamburger"></span>
-                </button>
+        <nav class="">
+            <div class="imgCont">
+                <img src="../assets/logo.png" alt="Logo">
             </div>
-        
-            <div class="sidebar navmenu offcanvas-sm canvas-slid">
-                <a class="logo" aria-label="Logo Banco Galicia" aria-hidden="true">
-                    <img src="../assets/ing.jpg" alt="">
-                </a>
-                <ul class="nav nav-user">
-                    <li class="dropdown">
-                        <a href="#" id="UserName_a" class="">
-                            <span class="">{{database.firstName}} {{database.lastName}}</span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="content-nav">
-                    <ul class="nav nav-sidebar">
-                        <li class="">
-                            <a href="#"> Inicio </a>
-                        </li>
-                        <li class="active">
-                            <a id=navmenu class=onboarding href="#">Cuentas</a>
-                        </li>
-                        <li class="">
-                            <a href="#">Tarjetas</a>
-                        </li>
-                        <li class="">
-                            <a href="#">Transferencias</a>
-                        </li>
-                        <li class="">
-                            <a href="#">Pagos de servicios</a>
-                        </li>
-                        <li class="">
-                            <a href="#">Compra/Venta de Dólares</a>
-                        </li>
-                        <li class="">
-                            <a href="#">Inversiones</a>
-                        </li>
-                        <li class="">
-                            <a href="javascript:void(window.open('http://www.bcra.gov.ar/BCRAyVos/Comparacion_de_Comisiones.asp'))"> Comparación de comisiones </a>
-                        </li>
-                        <li class="">
-                            <a href="#"> Autorización de Plazo Fijo </a>
-                        </li>
-                        <li class="">
-                            <a href="javascript:void(window.open('http://www.bancogalicia.com/banca/online/web/Personas/ProductosyServicios/cuenta-universal'))">Cuenta Gratuita Universal </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a id="LogOut_a">Cerrar Sesi&oacute;n</a></li>
-                    </ul>
-                </div>
+            <div class="navCont">
+                <a href="accounts.html">Cuentas</a>
+                <a href="loan-application.html">Prestamos</a>
+                <a href="transfers.html">Transferencias</a>
+                <a href="cards.html">Tarjetas</a>
+                <a href="index.html" class="btn">Cerrar Sesión</a>
             </div>
+        </nav>
+        <a href="#" id="menu_on">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
         <main>
-            <!--tittle or back-->
-            <div class="main">
-                <div id="__next"></div>
-                <div class="row full-h">
-                <div class='col-xs-12 page-header'>
-                    <div id="HelpIconContainer" class="pull-right onboarding" style="display:none;">
-                        <div id="HelpIcon">
-                            <a aria-label="ver mas informacion"class="icon icon-info pull-left"></a>
-                        </div>
+            <div v-show="modalShow" class="modalContainer">
+                <div class="modalContent"> 
+                    <select name="" id="" v-model="AccountType">
+                        <option value="" selected disabled>Elija el tipo de cuenta a crear</option>
+                        <option value="cuentaCorriente">Cuenta Corriente</option>
+                        <option value="cajaDeAhorroEnPesos">Caja de Ahorro En Pesos</option>
+                        <option value="cajaDeAhorroEnDolares">Caja de Ahorro En Dolares</option>
+                    </select>
+                    <div class="bot">
+                        <button class="create cancel" @click.reload="modalShow = !modalShow">Cancelar</button>
+                        <button class="create" @click.reload="createAccount">Crear</button>
                     </div>
-                    <h1 class='main_title'>Tus Cuentas</h1>
-                
-                    <div id="buttons-container" class="pull-right onboarding" title="">
-                        <button type='button' class='btn btn-md pull-left hidden-xs' aria-label="Nueva caja de ahorro">Nueva caja de ahorro</button>
-                        <button type='button' class='btn btn-md pull-left hidden-xs hidden-sm hidden-md' aria-label="Extraer sin tarjeta">Extraer sin tarjeta</button>
-                        <div id="dropdown-desktop" class='dropdown pull-left hidden-xs hidden-md hidden-sm'>
-                            <button id="mas-opciones-desktop" class='btn btn-dropdown dropdown-toggle' data-toggle='dropdown'>
-                                <span class="hidden-xs">más opciones</span>
-                            </button>
-                        </div>
-                    </div>
-                    <!--pull-right-->
-                    <div class="clearfix"></div>
                 </div>
-                <div class="col-sm-12">
-                
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h4 class="pull-left">Cuentas</h4>
+            </div>
+            <div class="main">
+                <div class="titleBtn">
+                    <h2>Cuentas</h2>
+                    <button class="create" @click="modalShow = !modalShow" v-show="accounts.length < 3">Crear Nueva Cuenta</button>
+                </div>
+                <div class="acc">
+                    <div v-show="accounts.length == 0">
+                        <p class="noAcc">Usted no posee prestamos</p>
+                    </div>
+                    <div class="cardAcc" v-for="acc in accounts" data-tilt data-tilt-scale="0.95" data-tilt-startY="40">
+                        <div class="account">
+                            <p>N° {{acc.number}}</p>
                         </div>
-
-                        <div  v-for="acc in account" class="col-sm-6 col-md-6 col-lg-3 col-xlg-2">
-                            <div class="box_ctas clickeable onboarding">
-                                <div class="pull-left titleArrow hidden-xs">Principal</div>
-                                <div class="icon-bookmark visible-xs"></div>
-                                <div class="orangeSquare clickeable">{{acc.abbreviationAccount}}</div>
-                                <p class="clickeable hidden-xs">{{acc.typeOfAccount}}</p>
-                                <h4 class="clickeable">${{acc.balance}}</h4>
-                                <h3 class="clickeable"><span id="NroCtaODesc">CUENTA N°</span><br><span id="NroCtaODesc">N° {{acc.number}}</span></h3>
-                                <p class="clickeable visible-xs">{{acc.typeOfAccount}}</p>
-
+                        <div class="infoAcc">
+                            <p>Saldo {{acc.abbreviationAccount}}: ${{acc.balance}}</p>
+                            <div class="buttons">
+                                <a :href='"account.html?id="+acc.id'>Ver Transacciones</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h4 class="pull-left">Cheques</h4>
-                    </div>
-                    <div class="col-xs-8 col-sm-5 col-md-4 col-lg-4">
-                        <div class="box" tabindex="0" style="cursor:pointer">
-                            <h4 style="color:#171a1f"> Cheques electrónicos </h4>
-                        </div>
-                    </div>
-                    <div class="col-xs-8 col-sm-5 col-md-4 col-lg-4">
-                        <div class="box" tabindex="0" style="cursor:pointer">
-                            <h4 style="color:#171a1f">Cheques físicos</h4>
+                        <div class="deleteBtn">
+                            <input class="btn create" type="button" value="Borrar Cuenta" @click="deleteAccount(acc.id)">
                         </div>
                     </div>
                 </div>
+                <hr>
+                <div class="titleBtn">
+                    <h2>Prestamos</h2>
+                    <button class="create" @click="createLoan">Solicitar Prestamo</button>
+                </div>
+                <div class="loan">
+                        <div v-show="loans.length == 0">
+                            <p class="noLoan">Usted no posee prestamos</p>
+                        </div>
+                        <div class="cardLoan" v-for="loan in loans">
+                            <div class="loanName">
+                                <div :class="loan.name"></div>
+                                <p>{{loan.name}}</p>
+                            </div>
+                            <div class="info">
+                                <p>Monto Final: ${{loan.amount}}</p>
+                                <p>Cuotas: {{loan.payments}}</p>
+                            </div>
+                        </div>
+                </div>
+            </main>
+            <footer>
+                    <p>&copy;By Sofia Menichelli | 2021 | MindHub <a href="https://github.com/SofiMenichelli" target="_blank">
+                        <img src="../assets/logoGit.png" alt="GitHub"/>
+                    </a></p>
+            </footer>
         </div>
-
-    </main>
-
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
+    <!-- swal -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/accounts.js"></script>
 </body>
 </html>

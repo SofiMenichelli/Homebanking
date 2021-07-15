@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/cards.css">
+    <script src="https://kit.fontawesome.com/c4b071bb59.js" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous">
+        </script>
+    
+    <script>
+        $(document).ready(function () {
+            $('#menu_on').click(function () { // Al hacer click...
+                $('body').toggleClass('visible_menu'); // Añadimos o eliminamos la clase 'visible_menu' al body
+            })
+        });
+    </script>
+</head>
+<body>
+    <div id="app">
+        <nav class="">
+            <div class="imgCont">
+                <img src="../assets/logo.png" alt="Logo">
+            </div>
+            <div class="navCont">
+                <a href="accounts.html">Cuentas</a>
+                <a href="loan-application.html">Prestamos</a>
+                <a href="transfers.html">Transferencias</a>
+                <a href="cards.html">Tarjetas</a>
+                <a href="index.html" class="btn">Cerrar Sesión</a>
+            </div>
+        </nav>
+        <a href="#" id="menu_on">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <div>
+            <h1 class="title">Tus tarjetas</h1>
+            <h2 v-show="cards.length == 0">Usted no posee ninguna tarjeta en este momento</h2>
+            <button  class="create" v-show="cards.length < 6" @click="modalShow = !modalShow">Create Card</button>
+            <main>
+                <div v-show="modalShow" class="modalContainer">
+                    <div class="modalContent">
+                    <select v-model="typeCard">
+                        <option selected value="" disabled>Tipo de Tarjeta</option>
+                        <option>Debit</option>
+                        <option>Credit</option>
+                    </select>
+                    <select v-model="typeColor">
+                        <option selected value="" disabled>Color Tarjeta</option>
+                        <option value="Titanium">Titanium</option>
+                        <option value="Silver">Silver</option>
+                        <option value="Gold">Gold</option>
+                    </select>
+                    <div class="bot">
+                            <button class="create cancel" @click.reload="modalShow = !modalShow">Cancelar</button>
+                            <button class="create" @click="addCard">Crear</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="title">Debito</h1>
+                    <div class="card" v-for="card in cardsDebit">
+                        <div style="margin: 2vh 0;">
+                            <div class="card__front card__part" :class="card.cardColor" >
+                                <img class="card__front-square card__square" src="../assets/logo.png">
+                                <img class="card__front-logo card__logo"
+                                src="../assets/wireless.png">
+                                <p class="card_numer">{{card.number}}</p>
+                                <div class="card__space-75">
+                                    <span class="card__label">{{card.cardType}}</span>
+                                    <p class="card__info">{{card.cardHolder}}</p>
+                                </div>
+                                <div class="card__space-25">
+                                    <span class="card__label">Expires</span>
+                                    <p class="card__info">{{cortarFecha(card.thruDate)}}</p>
+                                    <span v-show="estaVencida(card.thruDate) == true"><i class="fa fa-exclamation-triangle alert"></i></span>
+                                </div>
+                            </div>
+                            <div class="card__back card__part" :class="card.cardColor">
+                                <div class="card__black-line"></div>
+                                <div class="card__back-content">
+                                    <div class="card__secret">
+                                        <p class="card__secret--last">{{card.cvv}}</p>
+                                    </div>
+                                    <img class="card__back-square card__square" src="../assets/plus.png">
+                                    <img class="card__back-logo card__logo" src="../assets/banelco.png">
+                                </div>
+                            </div>
+                            <button class="create" @click="deleteCard(card.id)">Borrar tarjeta</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="title">Credito</h1>
+                    <div class="card" v-for="cardC in cardsCredit">
+                        <div>
+                            <div class="card__front card__part" :class="cardC.cardColor">
+                                <img class="card__front-square card__square" src="../assets/logo.png">
+                                <img class="card__front-logo card__logo" src="../assets/wireless.png">
+                                <p class="card_numer">{{cardC.number}}</p>
+                                <div class="card__space-75">
+                                    <span class="card__label">{{cardC.cardType}}</span>
+                                    <p class="card__info">{{cardC.cardHolder}}</p>
+                                </div>
+                                <div class="card__space-25">
+                                    <span class="card__label">Expires</span>
+                                    <p class="card__info">{{cortarFecha(cardC.thruDate)}}</p>
+                                    <span v-show="estaVencida(cardC.thruDate) == true"><i
+                                            class="fa fa-exclamation-triangle alert"></i></span>
+                                </div>
+                            </div>
+                            <div class="card__back card__part" :class="cardC.cardColor">
+                                <div class="card__black-line"></div>
+                                <div class="card__back-content">
+                                    <div class="card__secret">
+                                        <p class="card__secret--last">{{cardC.cvv}}</p>
+                                    </div>
+                                    <img class="card__back-square card__square" src="../assets/plus.png">
+                                    <img class="card__back-logo card__logo" src="../assets/banelco.png">
+                                </div>
+                            </div>
+                            <button class="create" @click="deleteCard(cardC.id)">Borrar tarjeta</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer>
+            <p>&copy;By Sofia Menichelli | 2021 | MindHub 
+                <a href="https://github.com/SofiMenichelli" target="_blank">
+                    <img src="../assets/logoGit.png" alt="GitHub" />
+                </a>
+            </p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- swal -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/cards.js"></script>
+
+</body>
+</html>

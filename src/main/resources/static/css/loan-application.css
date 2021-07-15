@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
+:root {
+    --a: #1B70A6;
+    --b : #1BBFAF;
+    --c: #F2C49B;
+    --d: #A6705D;
+    --e: #F2C9BB;
+
+}
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+}
+/* Estilos Generales */
+
+body {
+    background: rgb(233, 231, 231);
+    
+}
+
+/* NAV */
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+	height: 10vh;
+	font-size: 3rem;
+	font-weight: bold;
+	font-family: 'Indie Flower', cursive;
+    background-color: var(--a);
+}
+.navCont {
+    align-self: center;
+    margin-right: 2vw;
+}
+.imgCont {
+    margin-top: 2vh;
+    align-self: center;
+}
+div > img {
+    width: 20vw;
+}
+div > a {
+	text-decoration: none;
+    font-size: 1.4rem;
+    padding: 0.5rem;
+    text-shadow: var(--gris) 3px 3px 4px;
+    color: var(--c);
+}
+
+a:hover {
+    text-shadow: var(--e) 3px 3px 4px;
+	border-radius: 10%;
+}
+
+
+/* Footer */
+
+footer{
+    position: relative;
+    bottom: 0;
+    min-height:7vh;
+    width:100%;
+    background-color:var(--a);
+    color: black;
+}
+footer>p{
+    text-align: center;
+    font-size: 25px;
+    margin-top: 0.5vh;
+}
+a > img {
+    width: 2vw;
+    margin-top: 0.5vh;
+}
+
+/* MEDIA MENOS 768 */
+
+@media screen and ( min-width: 1px) and (max-width: 830px) {
+
+    nav{
+        position: fixed;
+        bottom: 0;
+        top: 0;
+        right:-320px; /* Escondemos nuestro menú con un valor negativo */ 
+        height: 100%;
+        z-index: 1;
+        padding: 90px 30px 30px;
+        background: var(--c);
+        opacity: 0;
+        transition: all 0.75s ease;
+        font-size: 1.2em;
+        align-items: flex-start;
+    }
+    nav a{
+        display:block;
+        text-decoration: none;
+        padding: 10px;
+        color: var(--a);
+        opacity: 1;
+        transition: all ease 0.25s;
+    }
+
+    nav a:hover{
+        color: rgba(255,255,255,1);
+        border-bottom-color:rgba(255,255,255,0.4);
+        border-radius: 5%;
+    }
+    .imgCont {
+        display: none;
+    }
+
+    #menu_on{
+        display: inline-block;
+        width:30px;
+        height: 20px;
+        position: relative;
+        z-index: 2;
+        left: 70vw;
+    }
+
+     #menu_on span{
+        width: 40px;
+        height: 5px;
+        border-radius: 4px;
+        display: block;
+        background: var(--a);
+        transition: all 0.25s ease; /* Propiedades a animar | Tiempo | Tipo animación*/
+        transform-origin : 0px 100%;
+        margin: 1vh;
+    }
+
+
+    #menu_on span:nth-child(2){
+        top: calc(50% - 2px);
+    }
+
+    #menu_on span:nth-child(3){
+        bottom: 0;
+    }
+
+    .visible_menu span:nth-child(1){
+        transform: rotate(45deg) translate(-2px,1px); 
+        z-index: 1;
+    }
+
+    .visible_menu span:nth-child(2){
+        opacity: 0;
+    }
+
+    .visible_menu span:nth-child(3){
+        transform: rotate(-45deg) translate(-2px,1px); 
+    }
+    .visible_menu nav{
+        right: 0;
+        z-index: 1;
+        opacity: 0.9;
+    }
+    .visible_menu #content{
+        transform: translateX(150px);
+    }
+}
+main {
+  height: 78vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  overflow: auto; 
+  flex-wrap: wrap;
+}
+.left {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.left .img {
+    min-width: 30vw;
+    min-height: 40vh;
+    background-image: url('../assets/prestamosFondo.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    
+}
+.montoPrestamo{
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    border-radius: 20px;
+    border: 2px solid var(--a);
+    padding: 10px;
+    margin: 2vh 0;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #d09b52;
+  padding: 40px 10px 40px 10px;
+  width: 70%;
+  max-width: 700px;
+  border-radius: 20px;
+  font-size: 20px;
+  background-color: var(--a);
+}
+
+h1 {
+  margin-bottom: 30px;
+  font-size: 2em;
+  color: #000;
+  margin:2vh 0;
+  text-align: center;
+}
+input, select{
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+  color: var(--a);
+  margin:2vh 0;
+}
+
+

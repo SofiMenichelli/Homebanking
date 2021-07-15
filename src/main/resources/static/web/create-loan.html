@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/create-loan.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous">
+        </script>
+    
+    <script>
+        $(document).ready(function () {
+            $('#menu_on').click(function () { // Al hacer click...
+                $('body').toggleClass('visible_menu'); // Añadimos o eliminamos la clase 'visible_menu' al body
+            })
+        });
+    </script>
+
+</head>
+<body>
+    <div id="app">
+        <form class="container border-info border-5 rounded-2">
+            <fieldset class="d-flex flex-column m-2 justify-content-between align-items-center">
+                <label class="m-2 border rounded-2" for="name">Nombre del prestamo
+                    <input class="m-2 border rounded-2" v-model="name" id="name" type="text" required>
+                </label>
+                <p>Por favor ingrese el numero sin puntos(.)</p>
+                <label class="m-2 border rounded-2" for="maxAmount">Maximo que podran solicitar
+                    <input class="m-2 border rounded-2" v-model="maxAmount" id="maxAmount" type="text" placeholder="1000000" required>
+                </label>
+                <p>Para ingresar la cantidad de cuotas disponibles debe hacerlo asi: 6,12,24,36</p>
+                <label class="m-2 border rounded-2" for="payment">Cantidad de cuotas disponibles que tendra
+                    <input class="m-2 border rounded-2" v-model="payment" id="payment" type="text" placeholder="12,24,48,60"
+                        required>
+                </label>
+                <p>Para ingresar el interes del prestamo si el interes es del 20%, coloque 0.20</p>
+                <label class="m-2 border rounded-2" for="fee"> Tasa de interes que tendra el prestamo
+                    <input class="m-2 border rounded-2" type="text" v-model="fee" id="fee">
+                </label class="m-2 border rounded-2">
+            </fieldset>
+            <input class="m-2" type="button" value="Crear nuevo prestamo" @click="createLoan">
+        </form>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- swal -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../js/create-loan.js"></script>
+</body>
+</html>

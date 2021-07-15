@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="../css/index.css">
+
+</head>
+<body>
+    <div id="app">
+        <main class="container">       
+            <form class="form-structor">
+                <h1 class="title">Bienvenido a ING BANK</h1>
+                <fieldset class="signup">
+                    <h2 class="form-title" id="signup"><span>o</span>Registrate</h2>
+                    <div class="form-holder">
+                        <input type="text"  v-model="firstName" class="input" placeholder="Nombre" required/>
+                        <input type="text" v-model="lastName" class="input" placeholder="Apellido" required/>
+                        <input type="email" v-model="email" class="input" placeholder="Email: maria@hotmail.com" required/>
+                        <input type="password"  v-model="psw" class="input" placeholder="Contraseña" required/>
+                    </div>
+                    <input type="submit" class="submit-btn" @click.prevent="registro" value="Registrate">
+                </fieldset>
+                <fieldset class="login slide-up">
+                    <div class="center">
+                        <h2 class="form-title" id="login"><span>o</span>Ingresa</h2>
+                        <div class="form-holder">
+                            <input type="email" v-model="email" class="input" placeholder="Email: maria@hotmail.com" required/>
+                            <input type="password" v-model="psw" class="input" placeholder="Password" required/>
+                        </div>
+                        <input type="submit" class="submit-btn" @click="login" value="Ingresa">
+                    </div>
+                </fieldset>
+            </form>
+        </main>
+        <footer>
+            <p>&copy;By Sofia Menichelli | 2021 | MindHub
+                <a href="https://github.com/SofiMenichelli" target="_blank">
+                    <img src="../assets/logoGit.png" alt="GitHub" />
+                </a>
+            </p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- swal -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/index.js"></script>
+</body>
+</html>

@@ -1,41 +1,45 @@
 package com.mindhub.homebanking.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Account{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-
     private long id;
+
     private String number;
     private LocalDateTime creationDate;
     private double balance;
-    private String typeOfAccount;
-    private String abbreviationAccount;
+    private AccountType typeOfAccount;
+    private boolean status;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
 
+    //el id del 1 pasa al muchos
+    //la relacion la mapea la propiedad que tienen en el muchos
+    @OneToMany (mappedBy="account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Transaction> transactions = new HashSet<>();
+
     public Account() { }
 
-    public Account(String number, LocalDateTime creationDate, double balance, String typeOfAccount, String abbreviationAccount, Client client) {
+    public Account(String number, LocalDateTime creationDate, double balance, AccountType typeOfAccount, Client client) {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
-        this.client = client;
         this.typeOfAccount = typeOfAccount;
-        this.abbreviationAccount = abbreviationAccount;
+        this.client = client;
+        this.status = true;
     }
 
     public long getId() { return id; }
-
-    public void setId(long id) { this.id = id; }
 
     public String getNumber() {
         return number;
@@ -65,24 +69,20 @@ public class Account{
 
     public Client getClient() { return client; }
 
-    public String getTypeOfAccount() { return typeOfAccount; }
+    public AccountType getTypeOfAccount() { return typeOfAccount; }
 
-    public void setTypeOfAccount(String typeOfAccount) { this.typeOfAccount = typeOfAccount; }
+    public void setTypeOfAccount(AccountType typeOfAccount) { this.typeOfAccount = typeOfAccount; }
 
-    public String getAbbreviationAccount() { return abbreviationAccount; }
-
-    public void setAbbreviationAccount(String abbreviationAccount) { this.abbreviationAccount = abbreviationAccount; }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", number='" + number + '\'' +
-                ", creationDate=" + creationDate +
-                ", balance=" + balance +
-                ", typeOfAccount='" + typeOfAccount + '\'' +
-                ", abbreviationAccount='" + abbreviationAccount + '\'' +
-                ", client=" + client +
-                '}';
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public boolean isStatus() { return status; }
+
+    public void setStatus(boolean status) { this.status = status; }
+
 }

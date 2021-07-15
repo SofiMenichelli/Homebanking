@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <link rel="stylesheet" href="../css/account.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous">
+        </script>
+    
+    <script>
+        $(document).ready(function () {
+            $('#menu_on').click(function () { // Al hacer click...
+                $('body').toggleClass('visible_menu'); // Añadimos o eliminamos la clase 'visible_menu' al body
+            })
+        });
+    </script>
+</head>
+<body>
+    <div id="app">
+        <nav class="">
+            <div class="imgCont">
+                <img src="../assets/logo.png" alt="Logo">
+            </div>
+            <div class="navCont">
+                <a href="accounts.html">Cuentas</a>
+                <a href="loan-application.html">Prestamos</a>
+                <a href="transfers.html">Transferencias</a>
+                <a href="cards.html">Tarjetas</a>
+                <a href="index.html" class="btn">Cerrar Sesión</a>
+            </div>
+        </nav>
+        <a href="#" id="menu_on">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <main>
+            <h1>Transacciones</h1>
+                <table class="table table-striped">
+                    <thead class="tbl-header">
+                        <tr>
+                            <th>N° de Transacción</th>
+                            <th>Fecha</th>
+                            <th>Descripcion</th>
+                            <th>Monto</th>
+                            <th>Balance Cuenta</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody class="tbl-content">
+                        <tr v-for="transaction in transactions">
+                            <td>{{transaction.id}}</td>
+                            <td>{{formateDate(transaction.date)}}</td>
+                            <td>{{transaction.description}}</td>
+                            <td :class="[transaction.type == 'DEBIT' ? 'rojo' : 'verde' ]">${{transaction.amount}}</td>
+                            <td>${{transaction.balance}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </main>
+        <footer>
+            <p>&copy;By Sofia Menichelli | 2021 | MindHub 
+                <a href="https://github.com/SofiMenichelli" target="_blank">
+                    <img src="../assets/logoGit.png" alt="GitHub" />
+                </a>
+            </p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="../js/account.js"></script>
+</body>
+</html>

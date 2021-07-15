@@ -13,16 +13,18 @@ const app = {
         }
     },
     created(){
-        axios.get('http://localhost:8080/rest/clients')
+        axios.get('/api/clients')
         .catch(error => console.log(error))
         .then(json => {
-            this.database = json.data["_embedded"].clients
+            console.log(json)
+            this.database = json.data
+            console.log(this.database)
             this.json = json;
         })
     },
     methods: {
         addClient() {
-            axios.post('http://localhost:8080/rest/clients', {
+            axios.post('/api/clients', {
                 firstName: this.firstName,
                 lastName: this.lastName,
                 email: this.email,

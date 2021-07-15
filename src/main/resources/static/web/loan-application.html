@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/loan-application.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous">
+        </script>
+    
+    <script>
+        $(document).ready(function () {
+            $('#menu_on').click(function () { // Al hacer click...
+                $('body').toggleClass('visible_menu'); // Añadimos o eliminamos la clase 'visible_menu' al body
+            })
+        });
+    </script>
+</head>
+<body>
+    <div id="app">
+        <nav class="">
+            <div class="imgCont">
+                <img src="../assets/logo.png" alt="Logo">
+            </div>
+            <div class="navCont">
+                <a href="accounts.html">Cuentas</a>
+                <a href="loan-application.html">Prestamos</a>
+                <a href="transfers.html">Transferencias</a>
+                <a href="cards.html">Tarjetas</a>
+                <a href="index.html" class="btn">Cerrar Sesión</a>
+            </div>
+        </nav>
+        <a href="#" id="menu_on">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <main>
+            <div class="left">
+                <div class="img">
+
+                </div>
+                <div class="montoPrestamo">
+                    <p v-for="loan in loans" v-show="loan.id == typeLoan">El monto maximo que puede solicitar es: $ {{maxAmount(loan.maxAmount)}}</p>
+                    <p v-show="payment !== null">Cantidad de cuotas elegidas: {{payment}} cuotas.</p>
+                    <p v-for="loan in loans" v-show="loan.name == typeLoan">El interes es de: ${{loan.fee}}</p>
+                </div>
+            </div>
+            <form id="loan-form">
+                <h1>Solicitar Prestamo</h1>
+                <select v-model="typeLoan">
+                    <option selected value="" disabled>Tipo de prestamo</option>
+                    <option v-for="loan in loans" :value="loan.id">{{loan.name}}</option>
+                </select>
+                <select v-for="loan in loans" v-model="payment" v-show="loan.id == typeLoan">
+                    <option selected value="" disabled>Cuotas que desea</option>
+                    <option  v-for="payments in loan.payments" :value="payments">{{payments}}</option>
+                </select>
+                <label>Monto a solicitar: <input type="text" v-model="amount"></label>
+                <select name="accDestiny" v-model="accDestiny">
+                    <option selected value="" disabled>Cuenta a acreditar</option>
+                    <option  v-for="acc in accounts" :value="acc.number">{{acc.number}}</option>
+                </select>
+                <input type="button" half value="Solicitar Prestamo" @click="createLoan">
+            </form>
+        </main>
+        <footer>
+            <p>&copy;By Sofia Menichelli | 2021 | MindHub
+                <a href="https://github.com/SofiMenichelli" target="_blank">
+                    <img src="../assets/logoGit.png" alt="GitHub" />
+                </a>
+            </p>
+        </footer>
+    </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vue@next"></script>
+        <!-- swal -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="../js/loan-application.js"></script>
+</body>
+</html>
