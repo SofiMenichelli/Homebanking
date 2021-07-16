@@ -14,6 +14,7 @@ Ahora podemos usar la imagen en cualquier otro lugar con la siguiente ruta:
 ![Preview](https://raw.githubusercontent.com/SofiMenichelli/Homebanking/main/Login.png)
 ![Preview](https://raw.githubusercontent.com/SofiMenichelli/Homebanking/main/acc.png)
 ![Preview](https://raw.githubusercontent.com/SofiMenichelli/Homebanking/main/trans.png)
+![Preview](https://raw.githubusercontent.com/SofiMenichelli/Homebanking/main/transac.png)
 ![Preview](https://raw.githubusercontent.com/SofiMenichelli/Homebanking/main/tarjetas.png)
 ![Preview](https://raw.githubusercontent.com/SofiMenichelli/Homebanking/main/crearCuenta.png)
 ![Preview](https://raw.githubusercontent.com/SofiMenichelli/Homebanking/main/crearT.png)
