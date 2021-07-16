@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounts</title>
+    <title>Cuentas-Prestamos</title>
     <link rel="stylesheet" href="../css/accounts.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -22,23 +22,26 @@
 </head>
 <body>
     <div id="app">
-        <nav class="">
-            <div class="imgCont">
-                <img src="../assets/logo.png" alt="Logo">
-            </div>
-            <div class="navCont">
-                <a href="accounts.html">Cuentas</a>
-                <a href="loan-application.html">Prestamos</a>
-                <a href="transfers.html">Transferencias</a>
-                <a href="cards.html">Tarjetas</a>
-                <a href="index.html" class="btn">Cerrar Sesión</a>
-            </div>
-        </nav>
-        <a href="#" id="menu_on">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
+        <header>
+            <nav class="">
+                <div class="imgCont">
+                    <img src="../assets/logo.png" alt="Logo">
+                </div>
+                <div class="navCont">
+                    <a href="accounts.html">Cuentas</a>
+                    <a href="loan-application.html">Prestamos</a>
+                    <a href="transfers.html">Transferencias</a>
+                    <a href="cards.html">Tarjetas</a>
+                    <a href="payments.html">Pagos</a>
+                    <a href="index.html" class="btn">Cerrar Sesión</a>
+                </div>
+            </nav>
+            <a href="#" id="menu_on">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </header>
         <main>
             <div v-show="modalShow" class="modalContainer">
                 <div class="modalContent"> 

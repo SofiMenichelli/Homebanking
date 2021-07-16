@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagos</title>
+    <link rel="stylesheet" href="../css/payments.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous">
+        </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#menu_on').click(function () { // Al hacer click...
+                $('body').toggleClass('visible_menu'); // Añadimos o eliminamos la clase 'visible_menu' al body
+            })
+        });
+    </script>
+
+</head>
+
+<body>
+    <div id="app">
+        <nav class="">
+            <div class="imgCont">
+                <img src="../assets/logo.png" alt="Logo">
+            </div>
+            <div class="navCont">
+                <a href="accounts.html">Cuentas</a>
+                <a href="loan-application.html">Prestamos</a>
+                <a href="transfers.html">Transferencias</a>
+                <a href="cards.html">Tarjetas</a>
+                <a href="payments.html">Pagos</a>
+                <a href="index.html" class="btn">Cerrar Sesión</a>
+            </div>
+        </nav>
+        <a href="#" id="menu_on">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <main>
+            <form>
+                <h1>Realizar Pago</h1>
+                <label for="number">Numero de Tarjeta
+                    <input id="number" type="text" v-model="number">
+                </label>
+                <label for="cvv">CVV
+                    <input id="cvv" type="text" v-model="cvv">
+                </label>
+                <label for="description">Descripcion Pago
+                    <input id="description" type="text" v-model="desc">
+                </label>
+                <label for="monto">Monto
+                    <input id="monto" type="text" v-model="amount">
+                </label>
+                <input type="button" @click="pay" value="Pago">
+            </form>
+           <!--  <div class="card">
+                <div style="margin: 2vh 0;">
+                    <div class="card__front card__part">
+                        <img class="card__front-square card__square" src="../assets/logo.png">
+                        <img class="card__front-logo card__logo" src="../assets/wireless.png">
+                        <p class="card_numer">{{number}}</p>
+                        <div class="card__space-75">
+                            <span class="card__label">{{card.cardType}}</span>
+                            <p class="card__info">{{card.cardHolder}}</p>
+                        </div>
+                        <div class="card__space-25">
+                            <span class="card__label">Expires</span>
+                            <p class="card__info">{{cortarFecha(card.thruDate)}}</p>
+                            <span v-show="estaVencida(card.thruDate) == true"><i
+                                    class="fa fa-exclamation-triangle alert"></i></span>
+                        </div>
+                    </div>
+                    <div class="card__back card__part">
+                        <div class="card__black-line"></div>
+                        <div class="card__back-content">
+                            <div class="card__secret">
+                                <p class="card__secret--last">{{card.cvv}}</p>
+                            </div>
+                            <img class="card__back-square card__square" src="../assets/plus.png">
+                            <img class="card__back-logo card__logo" src="../assets/banelco.png">
+                        </div>
+                    </div>
+                </div> -->
+        </main>
+        <footer>
+            <p>&copy;By Sofia Menichelli | 2021 | MindHub
+                <a href="https://github.com/SofiMenichelli" target="_blank">
+                    <img src="../assets/logoGit.png" alt="GitHub" />
+                </a>
+            </p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- swal -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/transfers.js"></script>
+</body>
+
+</html>

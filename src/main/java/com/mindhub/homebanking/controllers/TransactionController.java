@@ -1,10 +1,12 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.dtos.TransactionDTO;
+import com.mindhub.homebanking.dtos.TransactionFilterDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.AccountRepository;
+import com.mindhub.homebanking.service.AccountService;
 import com.mindhub.homebanking.service.ClientService;
 import com.mindhub.homebanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @Transactional
@@ -24,7 +29,7 @@ public class TransactionController {
     TransactionService transactionService;
 
     @Autowired
-    AccountRepository accountRepository;
+    AccountService accountService;
 
     @Autowired
     ClientService clientService;
@@ -42,8 +47,8 @@ public class TransactionController {
         }
         Client client = clientOptional.get();
 
-        Account accountOrigin = accountRepository.findByNumber(accOrigin);
-        Account accountDestiny = accountRepository.findByNumber(accDestiny);
+        Account accountOrigin = accountService.getAccByNumber(accOrigin);
+        Account accountDestiny = accountService.getAccByNumber(accDestiny);
 
         if (amount == 0 || description.isEmpty() || accOrigin.isEmpty() || accDestiny.isEmpty()) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
@@ -61,13 +66,34 @@ public class TransactionController {
 
         transactionService.saveTransaction(new Transaction(-amount,description + " " + accOrigin, LocalDateTime.now(), TransactionType.DEBIT, accountOrigin, accountOrigin.getBalance() - amount));
         accountOrigin.setBalance(accountOrigin.getBalance() - amount);
-        accountRepository.save(accountOrigin);
+        accountService.saveAcc(accountOrigin);
 
         transactionService.saveTransaction(new Transaction(amount,description + " " + accDestiny, LocalDateTime.now(), TransactionType.CREDIT, accountDestiny, accountDestiny.getBalance() + amount));
         accountDestiny.setBalance(accountDestiny.getBalance() + amount);
-        accountRepository.save(accountDestiny);
+        accountService.saveAcc(accountDestiny);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/transactions")
+    public ResponseEntity<?> ListTransactionsDTO(Authentication authentication, @RequestBody TransactionFilterDTO transactionFilterDTO) {
+        Optional<Client> clientOptional = clientService.getClientEmail(authentication.getName());
+        if (!clientOptional.isPresent()) {
+            return new ResponseEntity<>("Error, no estas autenticado", HttpStatus.UNAUTHORIZED);
+        }
+        Client client = clientOptional.get();
+        Account account = accountService.getAccByNumber(transactionFilterDTO.getAccountNumber());
+
+        if (!client.getAccounts().contains(account)) {
+            return new ResponseEntity<>("La cuenta no existe", HttpStatus.FORBIDDEN);
+        }
+        if (transactionFilterDTO.getToDate().equals((LocalDate.now()))) {
+            transactionFilterDTO.setToDate(LocalDate.now().plusDays(1));
         }
 
+        List<LocalDate> listOfDates = transactionFilterDTO.getFromDate().datesUntil(transactionFilterDTO.getToDate()).collect(Collectors.toList());
+        List<TransactionDTO> transactionsToDTOS= account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
+        List<TransactionDTO> transactionDTOList = transactionsToDTOS.stream().filter(e -> listOfDates.contains(e.getDate().toLocalDate())).collect(Collectors.toList());
+        return new ResponseEntity<>(transactionDTOList, HttpStatus.CREATED);
+    }
 }

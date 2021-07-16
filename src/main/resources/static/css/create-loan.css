@@ -44,7 +44,7 @@ div > img {
 }
 div > a {
 	text-decoration: none;
-    font-size: 1.4rem;
+    font-size: 1rem;
     padding: 0.5rem;
     text-shadow: var(--gris) 3px 3px 4px;
     color: var(--c);
@@ -112,13 +112,12 @@ a > img {
         display: none;
     }
 
-    #menu_on{
+   #menu_on{
         display: inline-block;
         width:30px;
-        height: 20px;
         position: relative;
         z-index: 2;
-        left: 70vw;
+        left: 80%;
     }
 
     #menu_on span{

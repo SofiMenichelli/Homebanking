@@ -4,8 +4,7 @@ import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
-import com.mindhub.homebanking.service.ClientService;
-import com.mindhub.homebanking.service.LoanService;
+import com.mindhub.homebanking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +31,10 @@ public class LoanController {
     LoanService loanService;
 
     @Autowired
-    TransactionRepository transactionRepository;
+    TransactionService transactionService;
 
     @Autowired
-    AccountRepository accountRepository;
+    AccountService accountService;
 
     @PostMapping(value="/loans")
     public ResponseEntity<?> addLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication) {
@@ -47,7 +46,7 @@ public class LoanController {
         Client client = clientOptional.get();
 
         Loan loan = loanService.getLoan(loanApplicationDTO.getId());
-        Account account = accountRepository.findByNumber(loanApplicationDTO.getAccountDestiny());
+        Account account = accountService.getAccByNumber(loanApplicationDTO.getAccountDestiny());
 
         if(loanApplicationDTO.getAmount() == 0 || loanApplicationDTO.getPayments() == 0){
             return new ResponseEntity<>("Ingreso un valor incorrecto", HttpStatus.FORBIDDEN);
@@ -67,9 +66,9 @@ public class LoanController {
 
         ClientLoan clientLoan = new ClientLoan(loanApplicationDTO.getAmount() + (loanApplicationDTO.getAmount() * loan.getFee()), loanApplicationDTO.getPayments(), client, loan);
         clientLoanRepository.save(clientLoan);
-        transactionRepository.save(new Transaction(loanApplicationDTO.getAmount(),loan.getName() + " " +  "loan approved", LocalDateTime.now(), TransactionType.CREDIT, account, account.getBalance() + loanApplicationDTO.getAmount()));
+        transactionService.saveTransaction(new Transaction(loanApplicationDTO.getAmount(),loan.getName() + " " +  "loan approved", LocalDateTime.now(), TransactionType.CREDIT, account, account.getBalance() + loanApplicationDTO.getAmount()));
         account.setBalance(account.getBalance() + loanApplicationDTO.getAmount());
-        accountRepository.save(account);
+        accountService.saveAcc(account);
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
     }
 

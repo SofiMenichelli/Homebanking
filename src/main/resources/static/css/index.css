@@ -31,7 +31,7 @@
 	 -moz-osx-font-smoothing: grayscale;
 }
 .title {
-    z-index: 0 !important;
+	margin-top: 1vh;
 	text-align: center;
 }
  .form-structor {
@@ -73,6 +73,7 @@
 	 visibility: hidden;
 }
  .form-structor .signup.slide-up .form-title {
+	 margin-top: 2vh;
 	 font-size: 1em;
 	 cursor: pointer;
 }
@@ -263,16 +264,17 @@
 footer{
     position: relative;
     bottom: 0;
-    min-height:7vh;
+    min-height:8vh;
     width:100%;
     background-color:var(--a);
     color: black;
 }
 footer>p{
     text-align: center;
-    font-size: 25px;
     margin-top: 0.5vh;
+    font-weight: bold;
 }
+
 a > img {
     width: 2vw;
     margin-top: 0.5vh;

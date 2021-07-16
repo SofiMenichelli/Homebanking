@@ -18,6 +18,9 @@ public class CardsServiceImpl implements CardService {
     public Card getCard(long id) { return cardRepository.findById(id); }
 
     @Override
+    public Card getCardByNumber(String number) { return cardRepository.findByNumber(number); }
+
+    @Override
     public List<Card> getCards(){ return cardRepository.findAll(); }
 
     @Override

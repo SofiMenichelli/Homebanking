@@ -21,6 +21,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
+                .antMatchers("/Web/manager.html").hasAuthority("ADMIN")
                 .antMatchers("/Web/create-loan.html").hasAuthority("ADMIN")
                 //.antMatchers("/rest/**").denyAll() ---> no puede acceder nadie
                 .antMatchers("/js/**", "/assets/**", "/css/**", "/Web/index.html" ).permitAll()

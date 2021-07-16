@@ -6,8 +6,8 @@ import java.util.List;
 public interface CardService {
 
     Card getCard(long id);
-   List<Card> getCards();
+    List<Card> getCards();
     void saveCard(Card card);
     List<Card> getByStatus (boolean status);
-
+    Card getCardByNumber(String number);
 }

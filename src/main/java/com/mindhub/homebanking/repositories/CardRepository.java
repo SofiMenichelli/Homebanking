@@ -8,4 +8,5 @@ import java.util.List;
 public interface CardRepository extends JpaRepository<Card, Long> {
     Card findById(long id);
     List<Card> findByStatus (boolean status);
+    Card findByNumber(String number);
 }

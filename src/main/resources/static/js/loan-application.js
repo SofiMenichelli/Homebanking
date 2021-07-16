@@ -20,15 +20,12 @@ const app = {
             .then(json => {
                 this.database = json.data
                 this.accounts = json.data.accounts
-                console.log(this.accounts)
 
             })
         axios.get('/api/loans')
             .catch(error => console.log(error))
             .then(json => {
-                //console.log(json.data[0].accounts[0])
                 this.loans = json.data
-                console.log(this.loans)
 
             })
     },

@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.service.implement;
 
+import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.ClientService;
@@ -33,4 +34,8 @@ public class ClientServiceImpl implements ClientService {
     public Optional<Client> getClientEmail(String email) {
         return clientRepository.findByEmail(email);
     }
+
+    @Override
+    public Client getByCards(Card card) { return clientRepository.findByCards(card); }
+
 }
