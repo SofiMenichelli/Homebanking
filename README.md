@@ -2,14 +2,6 @@
 ### Mi primer proyecto **JAVA**
 
 
-Link para ver el Proyecto y su funcionalidad.
-https://aqueous-refuge-10228.herokuapp.com/web/index.html
-
-
-Usuario: melba@mindhub.com
-Contraseña: melba1989
-
-
 El proyecto consiste en simular un HomeBanking, donde el usuario de la aplicación se puede logear o registrar, puede ver el saldo de su cuenta y simular acciones como creacion de tarjetas y cuentas, transferencias de dinero o pago de servicios, solicitud de prestamos pre-aprobados, y mas.
 
 
